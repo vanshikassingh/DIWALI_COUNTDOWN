@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diwali Countdown</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: rgb(1, 2, 33);
+      font-family: sans-serif;
+    }
+
+    #countdown {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 34px;
+      text-align: center;
+      z-index: 10;
+      text-shadow: 0 0 8px white, 0 0 12px #ff6f00;
+    }
+
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 10px;
+      background-color: #c8aaea;
+      color: rgb(5, 4, 59);
+      cursor: pointer;
+      padding: 15px 30px;
+      font-size: 18px;
+      box-shadow: 5px 5px 5px #5f0606;
+      transition: transform 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    #message {
+      display: none;
+      color: #ed0886;
+      font-size: 28px;
+      margin-top: 20px;
+      font-family: 'Great Vibes', cursive;
+
+    }
+
+    .star {
+      font-size: 5px;
+      color: white;
+      position: absolute;
+      animation: twinkle 1.5s infinite ease-in-out;
+      text-shadow: 0 0 8px white, 0 0 12px #00ffff, 0 0 16px #00ffff;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.6; }
+    }
+
+    .balls {
+      background-image: url("https://cdn4.iconfinder.com/data/icons/goofy-love-flat/96/Balloons-128.png");
+      background-size: cover;
+      position: absolute;
+      width: 80px;
+      height: 60px;
+      animation: float 10s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0% { transform: translate(0, 10px); }
+      25% { transform: translate(20px, -30px); }
+      50% { transform: translate(-40px, -60px); }
+      75% { transform: translate(60px, -30px); }
+      100% { transform: translate(0, 0); }
+    }
+  </style>
+</head>
+<body>
+  <div id="countdown"></div>
+
+  <div class="main-content">
+    <button class="btn" id="yesBtn" onclick="sayYes()">❤️</button>
+    <div id="message">🎉 May this diwali brings joy and happiness to you and your family ! 🎉</div>
+  </div>
+
+  <script>
+    // Generate stars
+    for (let i = 4; i < 50; i++) {
+      const star = document.createElement('span');
+      star.className = "star";
+      star.textContent = "✩";
+      star.style.top = Math.random() * window.innerHeight + 'px';
+      star.style.left = Math.random() * window.innerWidth + 'px';
+      document.body.appendChild(star);
+    }
+
+    // Generate balloons
+    for (let i = 0; i < 3; i++) {
+      const ball = document.createElement('span');
+      ball.className = "balls";
+      ball.style.top = Math.random() * window.innerHeight + "px";
+      ball.style.left = Math.random() * window.innerWidth + "px";
+      document.body.appendChild(ball);
+    }
+
+    // Countdown logic
+    function updateCountdown() {
+      const festivalDate = new Date("2025-10-20T00:00:00");
+      const now = new Date();
+      const diff = festivalDate - now;
+
+      if (diff <= 0) {
+        document.getElementById("countdown").textContent = "🎆 Happy Diwali!";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      document.getElementById("countdown").textContent =
+        `Countdown to Diwali: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // Button click logic
+    function sayYes() {
+      document.getElementById("message").style.display = "block";
+      document.getElementById("yesBtn").style.display = "none";
+    }
+  </script>
+</body>
+</html>
